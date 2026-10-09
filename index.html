@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="dark">
+  <meta name="description" content="左伟明，广东工业大学微电子科学与工程专业大一学生，热爱电子类工科课程，兴趣包括篮球、音乐与游戏。">
+  <title>左伟明 | 个人简介</title>
+  <style>
+    :root { color-scheme: dark; --bg: #111416; --panel: #191d20; --text: #f2f0e9; --muted: #adb2b4; --accent: #d0b990; --line: #34393c; }
+    * { box-sizing: border-box; }
+    html { background: var(--bg); }
+    body { margin: 0; color: var(--text); font-family: "Microsoft YaHei", "PingFang SC", -apple-system, BlinkMacSystemFont, sans-serif; -webkit-font-smoothing: antialiased; }
+    ::selection { color: var(--bg); background: var(--accent); }
+    .page { width: min(100% - 96px, 1080px); margin: 0 auto; }
+    .topbar { padding: 32px 0; display: flex; justify-content: space-between; align-items: center; gap: 20px; border-bottom: 1px solid var(--line); }
+    .wordmark { font-size: 13px; font-weight: 600; letter-spacing: 3px; }
+    .wordmark span { color: var(--accent); margin-right: 12px; }
+    .topbar p { margin: 0; color: var(--muted); font-size: 12px; letter-spacing: 2px; }
+    .hero { display: grid; grid-template-columns: minmax(0, 1fr) 240px; column-gap: 64px; row-gap: 28px; padding: 60px 0 50px; align-items: start; }
+    .hero > div:first-child { grid-column: 1; grid-row: 1; }
+    .portrait { grid-column: 2; grid-row: 1 / span 2; margin: 0; padding: 7px; border: 1px solid #72664f; border-radius: 4px; background: var(--panel); }
+    .portrait img { display: block; width: 100%; height: auto; aspect-ratio: 1; border-radius: 2px; }
+    .eyebrow { color: var(--accent); font-size: 11px; font-weight: 600; letter-spacing: 3px; margin: 0 0 23px; }
+    h1 { font-size: clamp(48px, 7vw, 78px); font-weight: 500; letter-spacing: 8px; line-height: 1.2; margin: 0 0 26px; }
+    .identity { color: var(--muted); font-size: 15px; line-height: 1.9; margin: 0; }
+    .identity strong { color: var(--text); font-weight: 500; }
+    .hero-note { grid-column: 1; grid-row: 2; border-left: 2px solid var(--accent); padding-left: 26px; margin-bottom: 3px; }
+    .hero-note h2 { font-size: 25px; line-height: 1.65; font-weight: 500; margin: 0 0 15px; letter-spacing: 1px; }
+    .hero-note p { color: var(--muted); font-size: 14px; line-height: 1.9; margin: 0; }
+    .education { display: grid; grid-template-columns: 1.15fr 1.1fr .7fr 1.1fr; background: var(--panel); border: 1px solid var(--line); border-radius: 3px; padding: 28px 32px; margin: 0 0 12px; }
+    .education div { padding: 0 30px; border-left: 1px solid var(--line); }
+    .education div:first-child { padding-left: 0; border-left: 0; }
+    .education div:last-child { padding-right: 0; }
+    dt { color: var(--muted); font-size: 12px; margin-bottom: 12px; letter-spacing: 1px; }
+    dd { margin: 0; font-size: 18px; line-height: 1.6; }
+    .section { display: grid; grid-template-columns: 220px 1fr; gap: 40px; padding: 40px 0; border-bottom: 1px solid var(--line); }
+    .section-heading { display: flex; gap: 16px; align-items: baseline; }
+    .index { color: var(--accent); font-size: 11px; letter-spacing: 1px; }
+    .section-heading h2 { font-size: 17px; font-weight: 500; letter-spacing: 2px; margin: 0; }
+    .summary { color: #c5c9c8; font-size: 15px; line-height: 2; margin: -5px 0 0; }
+    .focus { display: grid; grid-template-columns: 1fr 1fr; gap: 36px; }
+    h3 { font-size: 16px; font-weight: 500; line-height: 1.6; margin: 0 0 10px; }
+    .focus p { font-size: 14px; color: var(--muted); line-height: 1.9; margin: 0; }
+    .footer { display: flex; justify-content: space-between; gap: 20px; padding: 28px 0 36px; font-size: 11px; color: var(--muted); letter-spacing: 1px; }
+    .footer p { margin: 0; }
+    .footer .signature { color: var(--accent); }
+    a { color: inherit; text-decoration-color: var(--accent); text-underline-offset: 4px; }
+    @media (max-width: 760px) {
+      .page { width: calc(100% - 40px); }
+      .topbar { padding: 23px 0; }
+      .topbar p { font-size: 10px; letter-spacing: 1px; }
+      .hero { grid-template-columns: minmax(0, 1fr) 120px; padding: 36px 0; column-gap: 20px; row-gap: 28px; }
+      .portrait { grid-row: 1; padding: 4px; }
+      h1 { font-size: 44px; letter-spacing: 3px; margin-bottom: 18px; }
+      .hero-note { grid-column: 1 / -1; padding-left: 20px; }
+      .hero-note h2 { font-size: 22px; margin-bottom: 10px; }
+      .education { padding: 24px; grid-template-columns: 1fr; gap: 20px; }
+      .education div { padding: 18px 0 0; border-left: 0; border-top: 1px solid var(--line); }
+      .education div:first-child { padding-top: 0; border-top: 0; }
+      dt { margin-bottom: 7px; }
+      dd { font-size: 17px; }
+      .section { grid-template-columns: 1fr; gap: 24px; padding: 30px 0; }
+      .focus { gap: 24px; }
+      .footer { flex-wrap: wrap; line-height: 1.8; }
+    }
+    @media (max-width: 420px) {
+      .focus { grid-template-columns: 1fr; }
+      .hero { grid-template-columns: minmax(0, 1fr) 96px; column-gap: 14px; }
+      h1 { font-size: 38px; letter-spacing: 2px; }
+      .identity { font-size: 13px; }
+      .eyebrow { font-size: 10px; letter-spacing: 2px; }
+    }
+    @media print {
+      :root { color-scheme: light; --bg: #fff; --panel: #f5f5f3; --text: #182022; --muted: #51595b; --accent: #715b34; --line: #d0d3d2; }
+      @page { size: A4; margin: 18mm; }
+      .page { width: 100%; }
+      .topbar { padding: 0 0 18px; }
+      .hero { grid-template-columns: minmax(0, 1fr) 150px; padding: 28px 0; gap: 22px; }
+      .portrait { grid-column: 2; grid-row: 1 / span 2; }
+      .hero-note { grid-column: 1; }
+      h1 { font-size: 48px; }
+      .hero-note h2 { font-size: 21px; }
+      .education { padding: 20px; }
+      .education div { padding-left: 20px; padding-right: 20px; }
+      dd { font-size: 16px; }
+      .section { grid-template-columns: 150px 1fr; gap: 24px; padding: 28px 0; }
+      .summary { color: #394244; }
+      .hero, .education, .section { break-inside: avoid; }
+      .footer { padding-bottom: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="topbar">
+      <div class="wordmark"><span aria-hidden="true">/</span>个人简介</div>
+      <p lang="en">PERSONAL PROFILE</p>
+    </header>
+    <main>
+      <section class="hero" aria-labelledby="name">
+        <div>
+          <p class="eyebrow" lang="en">ZUO WEIMING</p>
+          <h1 id="name">左伟明</h1>
+          <p class="identity"><strong>广东工业大学</strong><br>微电子科学与工程 · 大一学生</p>
+        </div>
+        <div class="hero-note">
+          <h2>以兴趣为起点，<br>在学习与实践中成长。</h2>
+          <p>热爱电子类工科课程，期待逐步建立扎实的专业基础，将课堂所学应用于实践。</p>
+        </div>
+        <figure class="portrait">
+          <img src="profile-photo.jpg" alt="左伟明的个人照片" width="1280" height="1280">
+        </figure>
+      </section>
+      <dl class="education" aria-label="教育背景">
+        <div><dt>就读院校</dt><dd>广东工业大学</dd></div>
+        <div><dt>所在学院</dt><dd>集成电路学院</dd></div>
+        <div><dt>所学专业</dt><dd>微电子科学与工程</dd></div>
+        <div><dt>当前年级</dt><dd>大学一年级</dd></div>
+        <div><dt>联系方式</dt><dd><a href="tel:17725607098">177 2560 7098</a></dd></div>
+      </dl>
+      <section class="section" aria-labelledby="about">
+        <div class="section-heading"><span class="index" aria-hidden="true">01</span><h2 id="about">个人概述</h2></div>
+        <p class="summary">我是左伟明，目前就读于广东工业大学集成电路学院，专业为微电子科学与工程。我对电子类工科课程有浓厚兴趣，希望在大学阶段认真学习专业知识，通过课程学习与实践逐步明确发展方向。我期待参与交流与协作，在解决实际问题的过程中积累经验、提升能力。</p>
+      </section>
+      <section class="section" aria-labelledby="interests">
+        <div class="section-heading"><span class="index" aria-hidden="true">02</span><h2 id="interests">专业兴趣</h2></div>
+        <div class="focus">
+          <div><h3>电子类工科课程</h3><p>保持对专业学习的热情，关注课程知识的理解与积累，逐步夯实基础。</p></div>
+          <div><h3>从学习走向实践</h3><p>希望获得更多动手实践的机会，在实际任务中深化对专业知识的理解。</p></div>
+          <div><h3>生活兴趣</h3><p>喜欢打篮球、听音乐和玩游戏，保持积极开放的生活状态。</p></div>
+        </div>
+      </section>
+      <section class="section" aria-labelledby="growth">
+        <div class="section-heading"><span class="index" aria-hidden="true">03</span><h2 id="growth">成长期待</h2></div>
+        <p class="summary">期待接触与电子及集成电路相关的学习、实践机会，从基础任务做起，认真对待每一次反馈，在团队交流与合作中提升沟通能力，持续积累专业经验。</p>
+      </section>
+    </main>
+    <footer class="footer"><p class="signature">左伟明 · 广东工业大学</p><p>联系方式：<a href="tel:17725607098">177 2560 7098</a></p></footer>
+  </div>
+</body>
+</html>
+
