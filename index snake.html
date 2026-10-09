@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>贪吃蛇 · 轻盈版</title>
+<style>
+  :root{--bg:#f4f7fb;--panel:#fff;--panel2:#edf3f9;--text:#17202d;--muted:#718096;--line:#dce5ee;--accent:#2f7df6;--accent2:#58c98b;--danger:#ee6d74;--shadow:0 18px 48px #1c396312}
+  [data-mode="dark"]{--bg:#121923;--panel:#1b2634;--panel2:#223142;--text:#eef5ff;--muted:#9caec2;--line:#304256;--shadow:0 18px 48px #0005}
+  *{box-sizing:border-box}html{min-height:100%;background:var(--bg)}body{margin:0;background:radial-gradient(circle at 10% 0%,color-mix(in srgb,var(--accent) 10%,transparent),transparent 30%),var(--bg);color:var(--text);font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI","Microsoft YaHei",sans-serif;min-height:100vh;transition:background .25s,color .25s}
+  .app{width:min(1120px,94vw);margin:16px auto}.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}.brand{display:flex;gap:12px;align-items:center}.logo{width:44px;height:44px;border-radius:14px;background:var(--accent);color:white;display:grid;place-items:center;font-size:25px;box-shadow:0 8px 18px color-mix(in srgb,var(--accent) 28%,transparent)}h1{font-size:22px;margin:0}.sub{font-size:12px;color:var(--muted);margin-top:3px}.tools{display:flex;gap:8px;align-items:center}button{border:1px solid var(--line);background:var(--panel);color:var(--text);border-radius:10px;padding:9px 13px;cursor:pointer;font:inherit;font-size:13px;transition:.15s}button:hover{transform:translateY(-1px);border-color:var(--accent)}button:disabled{opacity:.45;cursor:not-allowed;transform:none}.icon{font-size:17px;padding:8px 10px}.layout{display:grid;grid-template-columns:minmax(360px,1fr) 320px;gap:18px}.card{background:var(--panel);border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow)}.game-card{padding:14px}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px}.stat{background:var(--panel2);border-radius:14px;padding:8px 12px}.stat b{display:block;font-size:20px;color:var(--accent)}.stat span{font-size:12px;color:var(--muted)}.board-wrap{position:relative;width:min(100%,calc(100vh - 235px));max-width:620px;margin:auto}.board{display:block;width:100%;aspect-ratio:1;border-radius:17px;background:var(--panel2);border:1px solid var(--line);touch-action:none}.progress{height:6px;background:var(--panel2);border-radius:99px;margin:9px 4px 0;overflow:hidden}.progress i{display:block;width:0;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:inherit;transition:width .2s}.overlay{position:absolute;inset:0;display:none;place-items:center;background:#101827b8;border-radius:17px;color:white;text-align:center;padding:20px}.overlay.show{display:grid}.message{background:#172231eF;border:1px solid #ffffff2b;border-radius:18px;padding:22px;max-width:280px}.message h2{margin:0 0 7px;font-size:22px}.message p{margin:0 0 15px;color:#c8d4e3;font-size:13px}.message button{background:var(--accent);border:0;color:#fff;width:100%}.under{display:flex;justify-content:space-between;align-items:center;padding:10px 2px 0;color:var(--muted);font-size:12px}.controls{display:none;grid-template-columns:repeat(3,50px);gap:7px;justify-content:center;margin:14px auto 0}.controls button{padding:10px;font-size:18px;background:var(--panel2)}.side{padding:20px}.side h2{font-size:16px;margin:0 0 13px}.side h2 small{float:right;font-size:11px;font-weight:500;color:var(--muted)}.side+.side{margin-top:16px}.section{border-bottom:1px solid var(--line);padding-bottom:19px;margin-bottom:19px}.help{color:var(--muted);font-size:13px;line-height:1.8}.kbd{display:inline-block;background:var(--panel2);border:1px solid var(--line);border-radius:5px;padding:1px 6px;color:var(--text);font-size:11px}.colors{display:flex;gap:10px}.color{width:29px;height:29px;border-radius:50%;border:3px solid var(--panel);outline:1px solid var(--line);padding:0}.color.active{outline:3px solid var(--text)}.history{width:100%;border-collapse:collapse;font-size:12px}.history th{color:var(--muted);font-weight:500;text-align:left;padding:5px 0}.history td{padding:9px 0;border-top:1px solid var(--line)}.history-note{font-size:11px;color:var(--muted);line-height:1.5;margin:12px 0 0}.legend i{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--danger);margin-right:4px}.empty{color:var(--muted);font-size:13px;padding:7px 0}.status{font-weight:600;color:var(--accent)}@media(max-width:800px){.app{margin:12px auto}.layout{grid-template-columns:1fr}.board-wrap{width:min(100%,calc(100vw - 52px))}.side{padding:17px}.controls{display:grid}.under{display:block;line-height:1.9}.under .status{float:right}}@media(max-width:480px){.top{align-items:flex-start}.brand h1{font-size:18px}.tools button{padding:7px 9px}.logo{width:38px;height:38px}.game-card{padding:10px}.stats{gap:6px}.stat{padding:7px}.stat b{font-size:18px}}
+
+  .tools{flex-wrap:wrap;justify-content:flex-end}.top{gap:12px}.layout{align-items:start}
+  #demo{border-color:var(--accent);color:var(--accent);font-weight:600}
+  #demo[aria-pressed="true"]{background:var(--accent);color:#fff}
+  button:focus-visible,select:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+  select{background:var(--panel2);color:var(--text);border:1px solid var(--line);border-radius:6px;padding:4px}
+  @media(max-width:800px){.top{flex-wrap:wrap}.tools{justify-content:flex-start}.board-wrap{width:min(100%,max(180px,calc(100dvh - 330px)))}}
+</style>
+</head>
+<body data-mode="light">
+<main class="app"><header class="top"><div class="brand"><div class="logo" aria-hidden="true">🐍</div><div><h1>贪吃蛇 · 轻盈版</h1><div class="sub">吃满 15 个食物，完成本局挑战</div></div></div><div class="tools"><button id="mode" title="切换日间 / 夜间模式" aria-label="切换日间 / 夜间模式">☾ 夜间</button><button id="demo" aria-pressed="false" title="从新一局开始 AI 自动演示">AI 自动演示</button><button id="pause" disabled>暂停</button><button id="newGame">新一局</button></div></header>
+<div class="layout"><section class="card game-card"><div class="stats"><div class="stat"><b id="score">0</b><span>当前得分</span></div><div class="stat"><b id="foodCount">0<span style="font-size:13px"> / 15</span></b><span>已吃食物</span></div><div class="stat"><b id="steps">0</b><span>移动步数</span></div></div><div class="board-wrap"><canvas id="board" class="board" width="600" height="600" aria-label="贪吃蛇游戏区域，使用 WASD 或方向键控制"></canvas><div id="overlay" class="overlay"><div class="message"><h2 id="resultTitle">准备开始</h2><p id="resultText">使用方向键或 WASD 移动蛇。</p><button id="resultBtn">开始游戏</button></div></div></div><div class="progress" role="progressbar" aria-label="通关进度" aria-valuemin="0" aria-valuemax="15" aria-valuenow="0"><i id="progressFill"></i></div><div class="controls" aria-label="方向控制"><span></span><button data-dir="up" aria-label="向上">▲</button><span></span><button data-dir="left" aria-label="向左">◀</button><button data-dir="down" aria-label="向下">▼</button><button data-dir="right" aria-label="向右">▶</button></div><div class="under"><span>操作：<span class="kbd">WASD</span> 或 <span class="kbd">↑ ↓ ← →</span>　·　空格暂停</span><span class="status" id="status" role="status">待开始</span></div></section>
+<aside><section class="card side"><h2>AI 自动演示</h2><p class="help" id="demoInfo" role="status">点击顶部「AI 自动演示」开始新一局。目标：连续吃到 15 个食物不死，获得 150 分即可通关。</p><p class="history-note">本地自动规划路线，无需联网。正常随机食物、正常碰撞规则；可暂停，停止后可手动接管。</p></section><section class="card side"><div class="section"><h2>显示模式 <small id="modeName">日间模式</small></h2><div class="help">顶部按钮切换整页背景的日间 / 夜间模式。<br>主题配色会在当前明暗背景上改变强调色。</div></div><div class="section"><h2>主题配色 <small id="colorName">晴空蓝</small></h2><div class="colors"><button class="color active" data-color="#2f7df6" style="background:#2f7df6" title="晴空蓝" aria-label="晴空蓝"></button><button class="color" data-color="#e86a92" style="background:#e86a92" title="莓果粉" aria-label="莓果粉"></button><button class="color" data-color="#8b67e8" style="background:#8b67e8" title="暮光紫" aria-label="暮光紫"></button><button class="color" data-color="#e4943e" style="background:#e4943e" title="暖阳橙" aria-label="暖阳橙"></button><button class="color" data-color="#20a88a" style="background:#20a88a" title="薄荷绿" aria-label="薄荷绿"></button></div></div><div class="section"><h2>怎么玩</h2><div class="help">每吃一个食物，获得 <b>10 分</b>。<br>吃满 <b>15 个</b>，达到 150 分即通关。<br>撞墙、撞自己即失败，不能原地掉头。<br>空格暂停 / 继续，Enter 开始 / 再来。<br>手机可滑动棋盘或点击方向按钮。</div></div><div><h2>本局设定</h2><div class="help">速度：<b id="speedText">每秒 8 格 · 匀速</b><br><label>速度：<select id="speed"><option value="150">慢速</option><option value="125" selected>普通</option><option value="95">快速</option></select></label><br><label><input id="sound" type="checkbox" checked> 开启音效</label><br>棋盘：<b>20 × 20</b>　<span class="legend"><i></i> 食物</span></div></div></section><section class="card side"><h2>个人纪录 <small>仅手动游玩</small></h2><div class="help">最高分：<b id="bestScore">0</b>　最快通关：<b id="bestSteps">—</b></div></section><section class="card side"><h2>最近十局 <small id="recordCount">0 / 10</small></h2><table class="history"><thead><tr><th scope="col">时间</th><th scope="col">结果</th><th scope="col">得分</th><th scope="col">步数</th></tr></thead><tbody id="history"></tbody></table><div id="empty" class="empty">还没有战绩，开始第一局吧。</div><p class="history-note" id="storageNote">自动保存到本浏览器，最新一局排在最上方；重开也会记录当前战绩。</p></section></aside></div></main>
+<script>
+
+'use strict';
+const $=id=>document.getElementById(id);
+const canvas=$('board'),ctx=canvas.getContext('2d'),N=20,cell=canvas.width/N,target=15;
+const dirs={up:{x:0,y:-1},down:{x:0,y:1},left:{x:-1,y:0},right:{x:1,y:0}};
+function readStore(key,fallback){try{return localStorage.getItem(key)??fallback}catch{return fallback}}
+function saveStore(key,value){try{localStorage.setItem(key,value)}catch{$('storageNote').textContent='浏览器未允许保存，本次战绩仅在当前页面保留。'}}
+let history=[];try{const data=JSON.parse(readStore('snake-history','[]'));if(Array.isArray(data))history=data.filter(x=>x&&Number.isFinite(x.score)).slice(0,10)}catch{}
+let gameSpeed=Number(readStore('snake-speed','125'));if(![150,125,95].includes(gameSpeed))gameSpeed=125;
+let soundOn=readStore('snake-sound','on')!=='off',audioCtx;
+let snake,food,dir,score,steps,eaten,timer,running=false,paused=false,ended=false;
+let autoPlay=false,roundIsDemo=false,turnQueue=[];
+
+// A Hamiltonian cycle covers every cell exactly once. The initial snake lies
+// in cycle order on row 10. Shortcuts must preserve that order and not pass
+// either the tail or the food, so there is always a safe route to the food.
+const cycle=[];
+for(let y=0;y<N;y++){
+  if(y%2===0){for(let x=1;x<N;x++)cycle.push({x,y})}
+  else{for(let x=N-1;x>=1;x--)cycle.push({x,y})}
+}
+for(let y=N-1;y>=0;y--)cycle.push({x:0,y});
+const cycleIndex=Array(N*N);
+cycle.forEach((p,i)=>cycleIndex[p.y*N+p.x]=i);
+const indexOf=p=>cycleIndex[p.y*N+p.x];
+const forward=(a,b)=>(b-a+cycle.length)%cycle.length;
+function chooseAutoDirection(){
+  const head=snake[0],headIndex=indexOf(head);
+  const tailGap=forward(headIndex,indexOf(snake[snake.length-1]));
+  const foodGap=forward(headIndex,indexOf(food));
+  let choice=null,best=0;
+  for(const [name,d] of Object.entries(dirs)){
+    const p={x:head.x+d.x,y:head.y+d.y};
+    if(p.x<0||p.x>=N||p.y<0||p.y>=N)continue;
+    const advance=forward(headIndex,indexOf(p));
+    if(advance>best&&advance<tailGap&&advance<=foodGap&&!snake.some(s=>s.x===p.x&&s.y===p.y)){
+      best=advance;choice=name;
+    }
+  }
+  return choice;
+}
+function placeFood(){
+  const free=[];
+  for(let y=0;y<N;y++)for(let x=0;x<N;x++)if(!snake.some(p=>p.x===x&&p.y===y))free.push({x,y});
+  food=free[Math.floor(Math.random()*free.length)];
+}
+function fresh(){
+  clearInterval(timer);snake=[{x:10,y:10},{x:9,y:10},{x:8,y:10}];
+  dir='right';turnQueue=[];score=steps=eaten=0;running=paused=ended=autoPlay=roundIsDemo=false;
+  placeFood();$('overlay').classList.remove('show');$('resultBtn').textContent='开始游戏';
+  update();draw();
+}
+function restartTimer(){clearInterval(timer);if(running&&!paused)timer=setInterval(tick,gameSpeed)}
+function start(){if(ended)fresh();running=true;paused=false;$('overlay').classList.remove('show');restartTimer();update()}
+function tick(){
+  if(!running||paused)return;
+  if(autoPlay){
+    const planned=chooseAutoDirection();
+    if(!planned){togglePause();$('demoInfo').textContent='路线异常，演示已暂停。请重新开始演示。';return}
+    dir=planned;
+  }else if(turnQueue.length)dir=turnQueue.shift();
+  const h={x:snake[0].x+dirs[dir].x,y:snake[0].y+dirs[dir].y};
+  const eating=h.x===food.x&&h.y===food.y;
+  const body=eating?snake:snake.slice(0,-1);
+  if(h.x<0||h.x>=N||h.y<0||h.y>=N||body.some(p=>p.x===h.x&&p.y===h.y)){
+    finish('失败','撞到了墙壁或自己。','失败');return;
+  }
+  snake.unshift(h);steps++;
+  if(eating){
+    eaten++;score+=10;beep(520,.06);
+    if(eaten>=target){finish('通关！','吃满 15 个食物，完成挑战！','通关');return}
+    placeFood();
+  }else snake.pop();
+  update();draw();
+}
+function recordRound(result){
+  history.unshift({time:new Date().toLocaleString('zh-CN',{month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'}),result,score,steps,mode:roundIsDemo?'AI 演示':'手动'});
+  history=history.slice(0,10);saveStore('snake-history',JSON.stringify(history));renderHistory();
+}
+function finish(title,text,result){
+  running=false;ended=true;clearInterval(timer);recordRound(result);update();draw();
+  $('resultTitle').textContent=title;
+  $('resultText').textContent=(roundIsDemo?'AI 演示 · ':'')+text+' 本局 '+score+' 分，'+steps+' 步。';
+  $('resultBtn').textContent=roundIsDemo?'再次演示':'再来一局';$('overlay').classList.add('show');
+  $('status').textContent=(roundIsDemo?'AI · ':'')+result;beep(result==='通关'?780:160,.2);
+}
+function beginRound(demo){
+  if(running&&steps>0)recordRound('中止');
+  fresh();autoPlay=roundIsDemo=demo;unlockAudio();start();
+}
+function toggleDemo(){
+  if(autoPlay&&running){
+    autoPlay=false;turnQueue=[];paused=true;clearInterval(timer);update();
+    $('demoInfo').textContent='演示已停止，游戏已暂停。点击「继续」后可用方向键接管；再次演示将开启新一局。';
+  }else beginRound(true);
+}
+function togglePause(){if(!running)return;paused=!paused;restartTimer();update()}
+function setDir(d){
+  if(autoPlay||paused)return;
+  if(!running)start();
+  const last=turnQueue.at(-1)||dir;
+  if(d===last||dirs[d].x===-dirs[last].x&&dirs[d].y===-dirs[last].y||turnQueue.length>=2)return;
+  turnQueue.push(d);
+}
+function update(){
+  $('score').textContent=score;$('foodCount').textContent=eaten+' / 15';$('steps').textContent=steps;
+  $('progressFill').style.width=eaten/target*100+'%';document.querySelector('.progress').setAttribute('aria-valuenow',eaten);
+  $('pause').disabled=!running;$('pause').textContent=paused?'继续':'暂停';
+  $('demo').textContent=autoPlay&&running?'停止演示':'AI 自动演示';$('demo').setAttribute('aria-pressed',String(autoPlay&&running));
+  $('status').textContent=ended?(eaten===target?'通关':'失败'):paused?'已暂停':autoPlay?'AI 自动演示':running?'进行中':'待开始';
+  if(roundIsDemo){$('demoInfo').textContent=eaten>=15?'✓ 已连续吃到 '+eaten+' 个食物，150 分，通关成功！':'演示进度：'+eaten+' / 15 个食物 · '+score+' 分 · '+steps+' 步';}
+  else $('demoInfo').textContent='点击顶部「AI 自动演示」开始新一局。目标：连续吃到 15 个食物不死，获得 150 分即可通关。';
+  $('speedText').textContent='每秒 '+(1000/gameSpeed).toFixed(1)+' 格 · 匀速';
+}
+function draw(){
+  if(!snake||!food)return;
+  const css=getComputedStyle(document.body);
+  ctx.clearRect(0,0,600,600);ctx.fillStyle=css.getPropertyValue('--panel2');ctx.fillRect(0,0,600,600);
+  ctx.strokeStyle=css.getPropertyValue('--line');ctx.globalAlpha=.32;
+  for(let i=1;i<N;i++){ctx.beginPath();ctx.moveTo(i*cell,0);ctx.lineTo(i*cell,600);ctx.moveTo(0,i*cell);ctx.lineTo(600,i*cell);ctx.stroke()}
+  ctx.globalAlpha=1;
+  if(eaten<target){ctx.fillStyle=css.getPropertyValue('--danger');ctx.beginPath();ctx.arc(food.x*cell+cell/2,food.y*cell+cell/2,cell*.28,0,Math.PI*2);ctx.fill()}
+  snake.forEach((p,i)=>{ctx.fillStyle=css.getPropertyValue(i?'--accent2':'--accent');ctx.beginPath();ctx.roundRect(p.x*cell+3,p.y*cell+3,cell-6,cell-6,7);ctx.fill()});
+  const h=snake[0],d=dirs[dir];ctx.fillStyle='#fff';
+  for(const sign of [-1,1]){ctx.beginPath();ctx.arc(h.x*cell+cell/2+d.x*6-d.y*5*sign,h.y*cell+cell/2+d.y*6+d.x*5*sign,2.5,0,Math.PI*2);ctx.fill()}
+}
+function unlockAudio(){if(!soundOn)return;try{audioCtx??=new(window.AudioContext||window.webkitAudioContext)();if(audioCtx.state==='suspended')audioCtx.resume().catch(()=>{})}catch{}}
+function beep(f,d){if(!soundOn||!audioCtx)return;try{const o=audioCtx.createOscillator(),g=audioCtx.createGain();o.frequency.value=f;g.gain.setValueAtTime(.03,audioCtx.currentTime);g.gain.exponentialRampToValueAtTime(.001,audioCtx.currentTime+d);o.connect(g);g.connect(audioCtx.destination);o.onended=()=>{o.disconnect();g.disconnect()};o.start();o.stop(audioCtx.currentTime+d)}catch{}}
+function renderHistory(){
+  const table=$('history');table.replaceChildren();
+  for(const r of history){const row=document.createElement('tr');for(const value of [r.time,(r.mode==='AI 演示'?'AI · ':'')+r.result,r.score,r.steps??'—']){const td=document.createElement('td');td.textContent=String(value??'—');row.appendChild(td)}table.appendChild(row)}
+  $('empty').style.display=history.length?'none':'block';$('recordCount').textContent=history.length+' / 10';
+  const manual=history.filter(r=>r.mode!=='AI 演示');
+  let best=Number(readStore('snake-best-score','0'))||0;
+  let bestSteps=Number(readStore('snake-best-steps','0'))||0;
+  for(const r of manual){best=Math.max(best,r.score);if(r.result==='通关'&&r.steps>0)bestSteps=bestSteps?Math.min(bestSteps,r.steps):r.steps}
+  saveStore('snake-best-score',String(best));saveStore('snake-best-steps',String(bestSteps));
+  $('bestScore').textContent=best;$('bestSteps').textContent=bestSteps?bestSteps+' 步':'—';
+}
+function applyMode(mode){
+  mode=mode==='dark'?'dark':'light';document.body.dataset.mode=mode;document.documentElement.dataset.mode=mode;
+  const dark=mode==='dark';$('mode').textContent=dark?'☀ 日间':'☾ 夜间';$('modeName').textContent=dark?'夜间模式':'日间模式';saveStore('snake-mode',mode);draw();
+}
+document.addEventListener('keydown',e=>{
+  if(e.target?.tagName==='SELECT'||e.target?.tagName==='INPUT'||e.ctrlKey||e.metaKey||e.altKey)return;
+  const map={w:'up',arrowup:'up',s:'down',arrowdown:'down',a:'left',arrowleft:'left',d:'right',arrowright:'right'};
+  if(map[e.key.toLowerCase()]){e.preventDefault();if(!e.repeat){unlockAudio();setDir(map[e.key.toLowerCase()])}}
+  if(e.code==='Space'&&e.target?.tagName!=='BUTTON'){e.preventDefault();if(!e.repeat)togglePause()}
+  if(e.key==='Enter'&&!running&&e.target?.tagName!=='BUTTON'){e.preventDefault();beginRound(roundIsDemo)}
+});
+document.querySelectorAll('[data-dir]').forEach(b=>b.onclick=()=>{unlockAudio();setDir(b.dataset.dir)});
+$('demo').onclick=toggleDemo;$('pause').onclick=togglePause;$('newGame').onclick=()=>beginRound(false);$('resultBtn').onclick=()=>beginRound(roundIsDemo);
+$('speed').value=gameSpeed;$('speed').onchange=e=>{gameSpeed=+e.target.value;saveStore('snake-speed',String(gameSpeed));restartTimer();update()};
+$('sound').checked=soundOn;$('sound').onchange=e=>{soundOn=e.target.checked;saveStore('snake-sound',soundOn?'on':'off');unlockAudio()};
+$('mode').onclick=()=>applyMode(document.body.dataset.mode==='dark'?'light':'dark');
+const colors=Array.from(document.querySelectorAll('.color'));
+function applyColor(b){document.documentElement.style.setProperty('--accent',b.dataset.color);colors.forEach(x=>{x.classList.toggle('active',x===b);x.setAttribute('aria-pressed',String(x===b))});$('colorName').textContent=b.title;saveStore('snake-color',b.dataset.color);draw()}
+colors.forEach(b=>b.onclick=()=>applyColor(b));
+let swipe=null;
+canvas.addEventListener('pointerdown',e=>{swipe={x:e.clientX,y:e.clientY};canvas.setPointerCapture(e.pointerId)});
+canvas.addEventListener('pointerup',e=>{if(!swipe)return;const dx=e.clientX-swipe.x,dy=e.clientY-swipe.y;swipe=null;if(Math.max(Math.abs(dx),Math.abs(dy))>18){unlockAudio();setDir(Math.abs(dx)>Math.abs(dy)?dx>0?'right':'left':dy>0?'down':'up')}});
+canvas.addEventListener('pointercancel',()=>{swipe=null});
+document.addEventListener('visibilitychange',()=>{if(document.hidden&&running&&!paused)togglePause()});
+fresh();applyMode(readStore('snake-mode','light'));applyColor(colors.find(b=>b.dataset.color===readStore('snake-color',''))||colors[0]);renderHistory();
+
+</script></body></html>
+
